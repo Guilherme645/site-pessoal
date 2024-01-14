@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+
+        .rating {
+            display: inline-block;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            cursor: pointer;
+            font-size: 30px;
+            color: #ccc;
+        }
+
+        .rating label:before {
+            content: '\2605'; /* Unicode character for a star */
+        }
+
+        .rating input:checked ~ label {
+            color: #f90;
+        }
+
+        .comment-container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .comment {
+            width: 100%;
+            margin-bottom: 10px;
+            resize: vertical;
+        }
+
+        .btn-edit,
+        .btn-delete,
+        .btn-save,
+        .btn-publish {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background-color: #3498db;
+            color: white;
+            margin-right: 70px;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+            margin-right: 140px;
+        }
+
+        .btn-save {
+            background-color: #2ecc71;
+            color: white;
+            margin-right: 210px;
+        }
+
+        .btn-publish {
+            background-color: #1abc9c;
+            color: white;
+        }
+
+        .comment-list {
+            text-align: left;
+        }
+
+        .comment-item {
+            border-bottom: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Avaliação</h1>
+
+    <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5" />
+        <label for="star5"></label>
+        <input type="radio" id="star4" name="rating" value="4" />
+        <label for="star4"></label>
+        <input type="radio" id="star3" name="rating" value="3" />
+        <label for="star3"></label>
+        <input type="radio" id="star2" name="rating" value="2" />
+        <label for="star2"></label>
+        <input type="radio" id="star1" name="rating" value="1" />
+        <label for="star1"></label>
+    </div>
+
+    <div class="comment-container">
+        <textarea class="comment" placeholder="Deixe seu comentário aqui..."></textarea>
+        <button class="btn-edit" onclick="editarComentario()">Editar</button>
+        <button class="btn-delete">Excluir</button>
+        <button class="btn-save" onclick="salvarComentario()">Salvar</button>
+        <button class="btn-publish" onclick="publicarComentario()">Publicar</button>
+    </div>
+
+    <div class="comment-list" id="commentList">
+        <!-- Comentários serão adicionados aqui dinamicamente -->
+    </div>
+
+    <script>
+        var comentarioEditavel = null;
+
+        function publicarComentario() {
+            var comentario = document.querySelector('.comment').value;
+            var estrelas = document.querySelector('input[name="rating"]:checked');
+
+            if (comentario.trim() !== '' && estrelas) {
+                var commentList = document.getElementById('commentList');
+                var commentItem = document.createElement('div');
+                commentItem.className = 'comment-item';
+                commentItem.innerHTML = '<strong>Nome do Usuário:</strong> ' + comentario +
+                    '<br><strong>Estrelas:</strong> ' + estrelas.value;
+                commentList.appendChild(commentItem);
+                
+                // Limpar o campo de comentário e desmarcar as estrelas após publicar
+                document.querySelector('.comment').value = '';
+                estrelas.checked = false;
+            } else {
+                alert('Por favor, adicione um comentário e escolha uma avaliação antes de publicar.');
+            }
+        }
+
+        function salvarComentario() {
+            if (comentarioEditavel) {
+                comentarioEditavel.querySelector('strong').innerHTML = 'Nome do Usuário:';
+                comentarioEditavel.querySelector('span').innerHTML = document.querySelector('.comment').value;
+                comentarioEditavel = null;
+
+                // Limpar o campo de comentário após salvar
+                document.querySelector('.comment').value = '';
+            } else {
+                alert('Nenhum comentário para salvar. Por favor, publique um comentário primeiro.');
+            }
+        }
+
+        function editarComentario() {
+            comentarioEditavel = document.querySelector('.comment-item:last-child');
+            if (comentarioEditavel) {
+                var comentario = comentarioEditavel.querySelector('span').innerHTML;
+                document.querySelector('.comment').value = comentario;
+            } else {
+                alert('Nenhum comentário para editar. Por favor, publique um comentário primeiro.');
+            }
+        }
+    </script>
+
+</body>
+</html>

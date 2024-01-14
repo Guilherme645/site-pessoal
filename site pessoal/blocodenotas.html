@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bloco de Notas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #noteInput {
+            width: 60%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            overflow-y: hidden;
+            resize: none; /* Evita redimensionamento manual */
+        }
+
+        .actionButton {
+            padding: 10px;
+            border-radius: 10px;
+            background-color: #6b6b6b;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        #notesList {
+            margin-bottom: 20px;
+            max-height: 300px; /* Altura máxima para exibição inicial */
+            overflow-y: auto; /* Adiciona barras de rolagem quando necessário */
+        }
+
+        .note {
+            padding: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            border-radius: 10px;
+            background-color: #f0f0f0;
+        }
+
+        .deleteNote {
+            cursor: pointer;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Bloco de Notas</h1>
+
+    <textarea id="noteInput" placeholder="Adicionar nova nota" oninput="autoResize()"></textarea>
+    <button class="actionButton" onclick="addNote()">Adicionar Nota</button>
+    <button class="actionButton" onclick="clearNotes()">Limpar Notas</button>
+
+    <div id="notesList"></div>
+
+    <script>
+        // Adicionado a função autoResize para a noteInput
+        function autoResize() {
+            var textarea = document.getElementById('noteInput');
+            textarea.style.height = 'auto';
+            textarea.style.height = textarea.scrollHeight + 'px';
+        }
+
+        // Adicionado a função autoResize para a notesList
+        function autoResizeNotesList() {
+            var notesList = document.getElementById('notesList');
+            notesList.style.height = 'auto';
+            notesList.style.height = notesList.scrollHeight + 'px';
+        }
+
+        // Seu código JavaScript foi modificado
+        window.onload = function () {
+            loadNotes();
+        };
+
+        function addNote() {
+            var noteText = document.getElementById('noteInput').value;
+
+            if (noteText.trim() === '') {
+                alert('Por favor, insira um texto para a nota.');
+                return;
+            }
+
+            var noteList = document.getElementById('notesList');
+
+            var noteDiv = document.createElement('div');
+            noteDiv.className = 'note';
+
+            var textNode = document.createTextNode(noteText);
+            noteDiv.appendChild(textNode);
+
+            var deleteButton = document.createElement('span');
+            deleteButton.className = 'deleteNote';
+            deleteButton.innerHTML = 'Excluir';
+            deleteButton.onclick = function() {
+                var userPassword = prompt('Digite a senha para excluir a nota:');
+                if (userPassword === password) {
+                    noteList.removeChild(noteDiv);
+                    saveNotes();
+                    autoResizeNotesList(); // Redimensiona a notesList após excluir uma nota
+                } else {
+                    alert('Senha incorreta. Não é possível excluir a nota.');
+                }
+            };
+
+            noteDiv.appendChild(deleteButton);
+
+            noteList.appendChild(noteDiv);
+
+            saveNotes();
+            autoResizeNotesList(); // Redimensiona a notesList após adicionar uma nota
+
+            document.getElementById('noteInput').value = '';
+            autoResize(); // Chama autoResize após adicionar uma nota
+        }
+
+        function saveNotes() {
+            var notes = document.getElementById('notesList').innerHTML;
+            localStorage.setItem('notes', notes);
+        }
+
+        function loadNotes() {
+            var notesList = document.getElementById('notesList');
+            var savedNotes = localStorage.getItem('notes');
+            if (savedNotes) {
+                notesList.innerHTML = savedNotes;
+                autoResizeNotesList(); // Redimensiona a notesList ao carregar as notas
+            }
+        }
+
+        function clearNotes() {
+            var confirmClear = confirm('Tem certeza de que deseja limpar todas as notas?');
+            if (confirmClear) {
+                localStorage.removeItem('notes');
+                document.getElementById('notesList').innerHTML = '';
+                autoResizeNotesList(); // Redimensiona a notesList ao limpar as notas
+            }
+        }
+    </script>
+
+</body>
+</html>

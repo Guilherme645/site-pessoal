@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        #gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .image-container {
+            position: relative;
+            width: 250px;
+            height: 350px;
+            overflow: hidden;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-checkbox {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 50%;
+            padding: 5px;
+            cursor: pointer;
+        }
+
+        .remove-checkbox:hover {
+            background-color: #ddd;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4046a0;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Galeria</h1>
+
+    <input type="file" id="imageInput" accept="image/*">
+    <button onclick="addImage()">Adicionar Foto</button>
+
+    <div id="gallery"></div>
+
+    <button onclick="removeSelected()">Remover Fotos Selecionadas</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var savedImages = JSON.parse(localStorage.getItem('galleryImages')) || [];
+            displayImages(savedImages);
+
+            document.getElementById('gallery').addEventListener('click', function (e) {
+                if (e.target && e.target.classList.contains('remove-checkbox')) {
+                    e.target.classList.toggle('selected');
+                }
+            });
+        });
+
+        function addImage() {
+            var input = document.getElementById('imageInput');
+            var files = input.files;
+
+            if (files.length > 0) {
+                var gallery = document.getElementById('gallery');
+
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        var imageUrl = e.target.result;
+
+                        var imageContainer = document.createElement('div');
+                        imageContainer.className = 'image-container';
+
+                        var img = document.createElement('img');
+                        img.src = imageUrl;
+
+                        var removeCheckbox = document.createElement('span');
+                        removeCheckbox.className = 'remove-checkbox';
+                        removeCheckbox.innerHTML = '&times;';
+
+                        imageContainer.appendChild(img);
+                        imageContainer.appendChild(removeCheckbox);
+
+                        gallery.appendChild(imageContainer);
+
+                        input.value = '';
+                        saveImage(imageUrl);
+                    };
+
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        function removeSelected() {
+            var gallery = document.getElementById('gallery');
+            var imageContainers = gallery.getElementsByClassName('image-container');
+
+            for (var i = imageContainers.length - 1; i >= 0; i--) {
+                var removeCheckbox = imageContainers[i].querySelector('.remove-checkbox');
+
+                if (removeCheckbox.classList.contains('selected')) {
+                    gallery.removeChild(imageContainers[i]);
+                    removeImage(imageContainers[i].querySelector('img').src);
+                }
+            }
+        }
+
+        function saveImage(imageUrl) {
+            var savedImages = JSON.parse(localStorage.getItem('galleryImages')) || [];
+            savedImages.push(imageUrl);
+            localStorage.setItem('galleryImages', JSON.stringify(savedImages));
+        }
+
+        function removeImage(imageUrl) {
+            var savedImages = JSON.parse(localStorage.getItem('galleryImages')) || [];
+            var index = savedImages.indexOf(imageUrl);
+
+            if (index !== -1) {
+                savedImages.splice(index, 1);
+                localStorage.setItem('galleryImages', JSON.stringify(savedImages));
+            }
+        }
+
+        function displayImages(images) {
+            var gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+
+            for (var i = 0; i < images.length; i++) {
+                var imageContainer = document.createElement('div');
+                imageContainer.className = 'image-container';
+
+                var img = document.createElement('img');
+                img.src = images[i];
+
+                var removeCheckbox = document.createElement('span');
+                removeCheckbox.className = 'remove-checkbox';
+                removeCheckbox.innerHTML = '&times;';
+
+                imageContainer.appendChild(img);
+                imageContainer.appendChild(removeCheckbox);
+
+                gallery.appendChild(imageContainer);
+            }
+        }
+    </script>
+</body>
+
+</html>

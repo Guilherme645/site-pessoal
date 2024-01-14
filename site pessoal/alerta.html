@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    @keyframes waving {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(20deg);
+      }
+      50% {
+        transform: rotate(0deg);
+      }
+      75% {
+        transform: rotate(-20deg);
+      }
+    }
+
+    .hand {
+      width: 120px;
+      height: 120px;
+      background-color: #000000;
+      border-radius: 50%;
+      position: relative;
+      animation: waving 2s infinite;
+      transform-origin: 50% 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+    }
+
+    .finger {
+      width: 10px;
+      height: 40px;
+      background-color: #f4c542;
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform-origin: 50% 100%;
+      border-radius: 5px;
+    }
+
+    .finger:nth-child(1) {
+      transform: rotate(15deg);
+      left: 40%;
+    }
+
+    .finger:nth-child(2) {
+      transform: rotate(45deg);
+      left: 30%;
+    }
+
+    .finger:nth-child(3) {
+      transform: rotate(75deg);
+      left: 50%;
+    }
+
+    .finger:nth-child(4) {
+      transform: rotate(105deg);
+      left: 70%;
+    }
+
+    .finger:nth-child(5) {
+      transform: rotate(135deg);
+      left: 60%;
+    }
+  </style>
+</head>
+<body>
+  <div class="hand">
+    <div class="finger"></div>
+    <div class="finger"></div>
+    <div class="finger"></div>
+    <div class="finger"></div>
+    <div class="finger"></div>
+  </div>
+</body>
+</html>

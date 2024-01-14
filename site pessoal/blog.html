@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Blog</title>
+    <style>
+        :root {
+            --main-bg-color: #ffffff;
+            --text-color: #ffffff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            background-color: #1c4b91 ;
+        }
+
+        header {
+            text-align: center;
+            background-color: var(--main-bg-color);
+            color: rgb(255, 255, 255);
+            padding: 10px;
+            border-radius: 10px;
+            opacity: 0; /* Start with opacity 0 for fade-in effect */
+            animation: fadeIn 1s forwards; /* Use forwards to keep the final state of the animation */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        main {
+            max-width: 800px;
+            margin: auto;
+        }
+
+        article {
+            margin-bottom: 30px;
+            transform: translateX(-50px); /* Start with a slide-in effect */
+            opacity: 0;
+            animation: slideIn 1s forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--text-color);
+            color: rgb(0, 0, 0);
+        }
+
+        p {
+            color: var(--text-color);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: var(--main-bg-color);
+            color: rgb(0, 0, 0);
+            border-radius: 10px;
+        }
+        h5{
+          color: white;
+          font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+  <header>
+    <h1>Meu Blog</h1>
+  </header>
+
+  <main>
+    <article>
+      <h5>Javascript</h5>
+      <strong> <p>Explorando as Maravilhas do JavaScript: Uma Jornada pelo Mundo da Programação Web<br>
+
+        Bem-vindos, entusiastas da programação e curiosos digitais, a mais uma emocionante incursão pelo vasto universo da linguagem de programação mais onipresente da web: o JavaScript! <br>
+        
+       <br> Desvendando os Mistérios do JavaScript <br>
+        
+        Se você já se perguntou como páginas da web ganham vida, interagindo dinamicamente com os usuários, a resposta está em grande parte no JavaScript. Essa linguagem de programação, criada inicialmente para tornar as páginas web mais interativas, evoluiu consideravelmente ao longo dos anos, tornando-se uma ferramenta poderosa e versátil para desenvolvedores. <br>
+        
+        <br> O Poder da Interatividade <br>
+        
+        Uma das características mais marcantes do JavaScript é a sua capacidade de manipular o DOM (Document Object Model), permitindo que os desenvolvedores modifiquem o conteúdo, a estrutura e o estilo de uma página de forma dinâmica. Isso significa que podemos criar interfaces de usuário envolventes e reativas, proporcionando uma experiência fluida e agradável aos usuários. <br>
+        
+        <br> Ecossistema Vibrante e Poderoso <br>
+        
+        JavaScript não é apenas uma linguagem; é um ecossistema vibrante de bibliotecas e frameworks que facilitam o desenvolvimento. Do popular jQuery ao robusto React e ao ágil Vue.js, há uma vasta gama de ferramentas à disposição para atender a diversas necessidades de desenvolvimento. <br>
+      
+       <br> Node.js: Expandindo os Horizontes <br>
+        
+        Além de seu domínio no navegador, o JavaScript encontrou um novo lar no servidor com o advento do Node.js. Agora, os desenvolvedores podem usar a mesma linguagem em ambos os lados da aplicação, facilitando a criação de aplicações escaláveis e eficientes. <br>
+        
+        <br> Async/Await: Simplificando a Assincronicidade <br>
+        
+        A introdução do async/await em JavaScript trouxe uma abordagem mais limpa e compreensível para lidar com operações assíncronas. Essa funcionalidade simplifica o código, tornando-o mais legível e fácil de manter, especialmente em aplicações que dependem fortemente de chamadas assíncronas. <br>
+        
+       <br> JavaScript no Mundo Real <br>
+        
+        Não podemos ignorar a importância do JavaScript no cenário atual. Ele é a espinha dorsal de muitas das aplicações e serviços que utilizamos diariamente, desde redes sociais até plataformas de comércio eletrônico. A demanda por desenvolvedores JavaScript qualificados está em constante crescimento, tornando-o uma habilidade valiosa no mercado de trabalho de tecnologia. <br>
+        
+       <br> Nossa Jornada Continua... <br>
+        
+        Em nossas futuras explorações do vasto mundo do JavaScript, mergulharemos mais fundo em conceitos avançados, exploraremos tendências emergentes e abordaremos desafios comuns enfrentados pelos desenvolvedores. Prepare-se para aprofundar seus conhecimentos e desvendar os segredos dessa linguagem incrível que continua a moldar a paisagem da web moderna. Fique ligado!</p>
+    </article></strong>
+
+   
+
+    <!-- Adicione mais artigos conforme necessÃ¡rio -->
+
+  </main>
+
+  <footer>
+    <h4>&copy; 2024 Meu Blog</h4>
+  </footer>
+
+</body>
+</html>

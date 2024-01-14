@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Forca</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .word-display {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .letters {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .letter {
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px;
+            cursor: pointer;
+        }
+        .hangman {
+            font-size: 36px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Jogo da Forca</h2>
+    <div class="word-display" id="wordDisplay"></div>
+    <div class="letters" id="letters"></div>
+    <div class="hangman" id="hangman"></div>
+
+    <script>
+        var words = ["javascript", "html", "css", "developer", "programming"];
+        var selectedWord = words[Math.floor(Math.random() * words.length)];
+        var guessedLetters = [];
+        var incorrectAttempts = 0;
+
+        function setupGame() {
+            displayWord();
+            displayLetters();
+            displayHangman();
+        }
+
+        function displayWord() {
+            var wordDisplay = document.getElementById("wordDisplay");
+            wordDisplay.innerHTML = selectedWord.split('').map(function(letter) {
+                return guessedLetters.includes(letter) ? letter : '_';
+            }).join(' ');
+
+            if (!wordDisplay.innerHTML.includes('_')) {
+                alert("Parabéns! Você ganhou!");
+                resetGame();
+            }
+        }
+
+        function displayLetters() {
+            var lettersContainer = document.getElementById("letters");
+            lettersContainer.innerHTML = "Letras: ";
+
+            for (var i = 65; i <= 90; i++) {
+                var letter = String.fromCharCode(i);
+                lettersContainer.innerHTML += `<div class="letter" onclick="guessLetter('${letter}')">${letter}</div>`;
+            }
+        }
+
+        function guessLetter(letter) {
+            if (!guessedLetters.includes(letter)) {
+                guessedLetters.push(letter);
+
+                if (!selectedWord.includes(letter)) {
+                    incorrectAttempts++;
+
+                    if (incorrectAttempts === 6) {
+                        alert("Você perdeu! A palavra era: " + selectedWord);
+                        resetGame();
+                    }
+                }
+
+                displayWord();
+                displayLetters();
+                displayHangman();
+            }
+        }
+
+        function displayHangman() {
+            var hangmanDisplay = document.getElementById("hangman");
+            hangmanDisplay.innerHTML = "Forca: ";
+
+            for (var i = 0; i < incorrectAttempts; i++) {
+                hangmanDisplay.innerHTML += "X ";
+            }
+        }
+
+        function resetGame() {
+            guessedLetters = [];
+            incorrectAttempts = 0;
+            selectedWord = words[Math.floor(Math.random() * words.length)];
+            setupGame();
+        }
+
+        setupGame();
+    </script>
+</body>
+</html>

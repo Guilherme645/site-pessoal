@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pesquisa de Ordem de Serviço</title>
+</head>
+<body>
+
+<h1>Pesquisa de Ordem de Serviço</h1>
+
+<label for="orderId">ID da Ordem:</label>
+<input type="text" id="orderId" placeholder="Insira o ID da Ordem">
+<button onclick="searchOrder()">Pesquisar</button>
+
+<script>
+  function searchOrder() {
+    const orderId = document.getElementById('orderId').value;
+    const baseUrl = 'https://api.gestaoclick.com/situacoes_ordens_servicos';
+    const accessToken = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
+    const secretAccessToken = 'YYYYYYYYYYYYYYYYYYYYYYYYYYYYYY';
+
+    const url = `${baseUrl}?order_id=${orderId}`; // Fix the URL construction
+    const xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          // Do something with the received data
+          console.log(JSON.parse(xhr.responseText));
+        } else {
+          console.error(`Erro na requisição: ${xhr.statusText}`);
+        }
+      }
+    };
+
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Authorization', `Bearer ${accessToken}`);
+    xhr.setRequestHeader('secret-access-token', secretAccessToken);
+    xhr.send();
+  }
+</script>
+
+</body>
+</html>

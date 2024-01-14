@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informações de Contato</title>
+  <link rel="stylesheet" href="styles.css"> <!-- Link to an external CSS file for better organization -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color:#1c4b91;
+      color: #000000;
+    }
+
+    h1 {
+      color: #ffffff;
+    }
+
+    .contact-info {
+      margin-top: 20px;
+    }
+
+    .form-container {
+      max-width: 200px;
+      margin: 10px;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background-color: #1c4b91;
+    }
+
+    button {
+      background-color: #1c4b91;
+      color: #fff;
+      padding: 10px 15px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease-in-out;
+    }
+
+    button:hover {
+      background-color: #0f2e5e;
+    }
+
+    a {
+      color: #ffffff;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+    }
+
+    a:hover {
+      color: #ffffff;
+    }
+    p{
+      color: white;
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>Informações de Contato</h1>
+
+  <strong><div class="contact-info">
+    <p>Número de Telefone: <a href="tel:+123456789" style="color: #ffffff;">(61) 98426-4979</a></p>
+    <p>Instagram: <a href="https://www.instagram.com/guilherme_crvlho/" target="_blank" style="color: #ffffff;">@guilherme_crvlho</a></p>
+    <p>LinkedIn: <a href="https://www.linkedin.com/in/guilherme-carvalho-1b5107262/" target="_blank" style="color: #ffffff;">Guilherme Carvalho</a></p>
+  </div></strong>
+
+  <div class="form-container">
+    <h2>Enviar Mensagem</h2>
+
+    <strong><label for="sendername">Nome do Remetente</label>
+    <input type="text" id="sendername" required>
+
+    <label for="to">Para Email</label>
+    <strong><input type="text" id="to" style="color: white;" value="guilherme64513@gmail.com" required></strong>
+    <label for="subject">Assunto</label>
+    <input type="text" id="subject" required>
+
+    <label for="replyto">Responder para (E-mail)</label>
+    <input type="text" id="replyto" required>
+
+    <label for="message">Mensagem</label>
+    <textarea id="message" cols="40" rows="8" required></textarea>
+
+    <button onclick="sendMail()">Enviar</button>
+  </div></strong>
+
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  (function () {
+    emailjs.init("user_your_emailjs_user_id"); // Replace "user_your_emailjs_user_id" with your EmailJS user ID
+  })();
+
+  function sendMail() {
+    var params = {
+      sendername: document.querySelector("#sendername").value,
+      to: document.querySelector("#to").value,
+      subject: document.querySelector("#subject").value,
+      replyto: document.querySelector("#replyto").value,
+      message: document.querySelector("#message").value,
+    };
+
+    var serviceID = "your_emailjs_service_id"; // Replace "your_emailjs_service_id" with your EmailJS service ID
+    var templateID = "your_emailjs_template_id"; // Replace "your_emailjs_template_id" with your EmailJS template ID
+
+    emailjs.send(serviceID, templateID, params)
+      .then(res => {
+        alert("Email sent successfully");
+      })
+      .catch(error => {
+        console.error("Email failed to send:", error);
+      });
+  }
+</script>
+</body>
+
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navegação de Imagens com Botões</title>
+  <style>
+    body {
+      overflow: hidden;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    #imageContainer {
+      display: flex;
+      overflow: hidden;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    img {
+      flex: 0 0 20vw; /* Ajuste o tamanho conforme necessário */
+      height: auto;
+    }
+
+    #prevButton,
+    #nextButton {
+      position: absolute;
+      top: 50%;
+      font-size: 16px; /* Reduzi o tamanho da fonte para caber melhor */
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    #prevButton {
+      left: 10px;
+    }
+
+    #nextButton {
+      right: 10px;
+    }
+  </style>
+</head>
+<body>
+  <button id="prevButton" onclick="navigate(-1)">&#9665; Anterior</button>
+  <div id="imageContainer">
+    <!-- Adicione mais imagens conforme necessário -->
+    <img src="WhatsApp_Image_2023-11-26_at_00.56.52-removebg-preview.png" alt="Imagem 1">
+    <img src="WhatsApp_Image_2023-12-10_at_17.17.29-removebg-preview.png" alt="Imagem 2">
+    <img src="WhatsApp_Image_2023-12-15_at_23.02.53-removebg-preview.png" alt="Imagem 3">
+  </div>
+  <button id="nextButton" onclick="navigate(1)">Próximo &#9655;</button>
+
+  <script>
+    const images = [
+      "WhatsApp_Image_2023-11-26_at_00.56.52-removebg-preview.png",
+      "WhatsApp_Image_2023-12-10_at_17.17.29-removebg-preview.png",
+      "WhatsApp_Image_2023-12-15_at_23.02.53-removebg-preview.png"
+      // Adicione mais imagens conforme necessário
+    ];
+
+    let currentIndex = 0;
+    const imageContainer = document.getElementById('imageContainer');
+    const prevButton = document.getElementById('prevButton');
+    const nextButton = document.getElementById('nextButton');
+
+    function navigate(direction) {
+      currentIndex += direction;
+      showImages();
+    }
+
+    function showImages() {
+      if (currentIndex < 0) {
+        currentIndex = images.length - 1;
+      } else if (currentIndex >= images.length) {
+        currentIndex = 0;
+      }
+
+      const transformValue = `translateX(${-currentIndex * 20}vw)`;
+      imageContainer.style.transform = transformValue;
+    }
+
+    prevButton.addEventListener('click', () => navigate(-1));
+    nextButton.addEventListener('click', () => navigate(1));
+
+    // Mostrar a primeira imagem inicialmente
+    showImages();
+  </script>
+</body>
+</html>

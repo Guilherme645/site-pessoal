@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar, Editar, Excluir e Salvar Textos</title>
+    <style>
+        /* Estilos simples para melhorar a aparência */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        input[type="text"] {
+            width: 200px;
+            padding: 5px;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Textos</h1>
+
+    <input type="text" id="textoInput" placeholder="Digite um texto">
+    <button onclick="adicionarTexto()">Adicionar</button>
+
+    <ul id="listaTextos">
+        <!-- A lista de textos será exibida aqui -->
+    </ul>
+
+    <button onclick="excluirTodos()">Excluir Todos</button>
+    <button onclick="salvarDados()">Salvar Dados</button>
+
+    <script>
+        // Função para carregar os dados do localStorage
+        function carregarDados() {
+            const dados = JSON.parse(localStorage.getItem('listaTextos')) || [];
+            const listaTextos = document.getElementById('listaTextos');
+
+            dados.forEach((texto) => {
+                const novoItem = criarItemLista(texto);
+                listaTextos.appendChild(novoItem);
+            });
+        }
+
+        // Função para criar um novo item de lista
+        function criarItemLista(texto) {
+            const novoItem = document.createElement('li');
+            novoItem.textContent = texto;
+
+            novoItem.onclick = function () {
+                exibirTextoCompleto(novoItem);
+            };
+
+            const botaoEditar = document.createElement('button');
+            botaoEditar.textContent = 'Editar';
+            botaoEditar.onclick = function (event) {
+                event.stopPropagation();
+                editarTexto(novoItem);
+            };
+
+            const botaoExcluir = document.createElement('button');
+            botaoExcluir.textContent = 'Excluir';
+            botaoExcluir.onclick = function (event) {
+                event.stopPropagation();
+                excluirTexto(novoItem);
+            };
+
+            novoItem.appendChild(botaoEditar);
+            novoItem.appendChild(botaoExcluir);
+
+            return novoItem;
+        }
+
+        // Função para adicionar um novo texto
+        function adicionarTexto() {
+            const novoTexto = document.getElementById('textoInput').value;
+            document.getElementById('textoInput').value = '';
+
+            const listaTextos = document.getElementById('listaTextos');
+            const novoItem = criarItemLista(novoTexto);
+
+            listaTextos.appendChild(novoItem);
+
+            salvarDados();
+        }
+
+        // Função para editar um texto
+        function editarTexto(item) {
+            const novoTexto = prompt('Editar texto:', item.textContent);
+            if (novoTexto !== null) {
+                item.textContent = novoTexto;
+                salvarDados();
+            }
+        }
+
+        // Função para excluir um texto
+        function excluirTexto(item) {
+            if (confirm('Tem certeza que deseja excluir este texto?')) {
+                item.remove();
+                salvarDados();
+            }
+        }
+
+        // Função para exibir o texto completo
+        function exibirTextoCompleto(item) {
+            alert(item.textContent);
+        }
+
+        // Função para excluir todos os textos
+        function excluirTodos() {
+            if (confirm('Tem certeza que deseja excluir todos os textos?')) {
+                const listaTextos = document.getElementById('listaTextos');
+                while (listaTextos.firstChild) {
+                    listaTextos.removeChild(listaTextos.firstChild);
+                }
+                salvarDados();
+            }
+        }
+
+        // Função para salvar os dados no localStorage
+        function salvarDados() {
+            const listaTextos = document.getElementById('listaTextos');
+            const dados = Array.from(listaTextos.children).map((item) => item.textContent);
+            localStorage.setItem('listaTextos', JSON.stringify(dados));
+        }
+
+        // Carregar dados ao carregar a página
+        window.onload = function () {
+            carregarDados();
+        };
+    </script>
+</body>
+</html>
